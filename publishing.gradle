@@ -32,13 +32,13 @@ uploadArchives {
             }
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
             pom.project {
-                name 'Touchy'
-                description 'Deployment sensitive configuration library for Java'
+                name 'Sursutils'
+                description 'Utility for Java'
                 url 'http://github.com/sursmobil/touchy'
                 scm {
-                    url 'http://github.com/sursmobil/touchy.git'
-                    connection 'scm:git:git://github.com/sursmobil/touchy.git'
-                    developerConnection 'scm:git:ssh:git@github.com:sursmobil/touchy.git'
+                    url 'http://github.com/sursmobil/sursutils.git'
+                    connection 'scm:git:git://github.com/sursmobil/sursutils.git'
+                    developerConnection 'scm:git:ssh:git@github.com:sursmobil/sursutils.git'
                 }
                 licenses {
                     license {
