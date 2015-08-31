@@ -1,0 +1,60 @@
+apply plugin: 'signing'
+apply plugin: 'maven'
+
+task javadocJar (type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task sourceJar (type : Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar
+    archives sourceJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: oss_user, password: oss_pass)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: oss_user, password: oss_pass)
+            }
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+            pom.project {
+                name 'Touchy'
+                description 'Deployment sensitive configuration library for Java'
+                url 'http://github.com/sursmobil/touchy'
+                scm {
+                    url 'http://github.com/sursmobil/touchy.git'
+                    connection 'scm:git:git://github.com/sursmobil/touchy.git'
+                    developerConnection 'scm:git:ssh:git@github.com:sursmobil/touchy.git'
+                }
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'CJ'
+                        name 'Szymon Janota'
+                        email 'mr.akra@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
