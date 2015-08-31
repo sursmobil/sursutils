@@ -11,6 +11,8 @@ public class CachedFactory {
 
     /**
      * This method will create new CachedFactory using default implementation of Map.
+     *
+     * @param instantiate Method to instantiate new instances
      * @return New CachedFactory
      */
     public static CachedFactory create(Instantiate instantiate) {
@@ -24,6 +26,7 @@ public class CachedFactory {
      * This method will return existing instance of instanceClass if already cached or new provided by given provider.
      * Instance created by provider will be added to cache before returning, so next call will return same value.
      * @param instanceClass Class of instance
+     * @param <T> Type to instantiate
      * @return Instance of requested class
       */
     public <T> T getInstance(Class<T> instanceClass) {

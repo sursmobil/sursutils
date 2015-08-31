@@ -1,5 +1,5 @@
 group 'com.github.sursmobil'
-version '0.0.2'
+version '0.0.2-SNAPSHOT'
 
 task wrapper(type: Wrapper) {
   gradleVersion = '2.5'
