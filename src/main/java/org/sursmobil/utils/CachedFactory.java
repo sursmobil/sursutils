@@ -25,6 +25,7 @@ public class CachedFactory {
     /**
      * This method will return existing instance of instanceClass if already cached or new provided by given provider.
      * Instance created by provider will be added to cache before returning, so next call will return same value.
+     *
      * @param instanceClass Class of instance
      * @param <T> Type to instantiate
      * @return Instance of requested class
@@ -34,11 +35,22 @@ public class CachedFactory {
         return getPresentInstance(instanceClass);
     }
 
-    private synchronized <T> void createCellIfMissing(Class<T> instanceClass) {
-        if(!hasInstance(instanceClass)) {
+    /**
+     * This method forces creation of instance of instanceClass if its missing in cache.
+     * @param instanceClass class of instance to create
+     * @return  True is returned if new instance was created, false otherwise.
+     */
+    public boolean createInstance(Class<?> instanceClass) {
+        return createCellIfMissing(instanceClass);
+    }
+
+    private synchronized <T> boolean createCellIfMissing(Class<T> instanceClass) {
+        boolean willBeCreated = !hasInstance(instanceClass);
+        if(willBeCreated) {
             Cell<T> instance = createInstanceCell(instanceClass);
             putInstanceCell(instanceClass, instance);
         }
+        return willBeCreated;
     }
 
     private <T> void putInstanceCell(Class<T> instanceClass, Cell<T> instance) {
