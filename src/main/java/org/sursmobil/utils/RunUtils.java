@@ -6,9 +6,17 @@ package org.sursmobil.utils;
 public class RunUtils {
     private RunUtils() {}
 
-    public static <T> T withUncheckedThrow(ThrowingSupplier<T> supplier) {
+    public static <T> T uncheckedSupply(ThrowingSupplier<T> supplier) {
         try {
             return supplier.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void uncheckedRun(ThrowingRunner runner) {
+        try {
+            runner.run();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

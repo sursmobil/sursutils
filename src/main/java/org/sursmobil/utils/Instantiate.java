@@ -10,7 +10,7 @@ public interface Instantiate {
         return new Instantiate() {
             @Override
             public <T> T create(Class<T> type) {
-                return RunUtils.withUncheckedThrow(type::newInstance);
+                return RunUtils.uncheckedSupply(type::newInstance);
             }
         };
     }
